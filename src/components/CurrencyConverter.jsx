@@ -17,7 +17,7 @@ function CurrencyConverter() {
     }
   });
 
-  const [loading, setloading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const getCurrencty = async () => {
     try {
@@ -30,14 +30,14 @@ function CurrencyConverter() {
   };
 
   const handlefav = (currency) => {
-    let updatedfavs = [...favorites];
+    let updatedFavs = [...favorites];
     if (favorites.includes(currency)) {
-      updatedfavs = updatedfavs.filter((item) => item !== currency);
+      updatedFavs = updatedFavs.filter((item) => item !== currency);
     } else {
-      updatedfavs.push(currency);
+      updatedFavs.push(currency);
     }
-    setFavorites(updatedfavs);
-    localStorage.setItem("favs", JSON.stringify(updatedfavs));
+    setFavorites(updatedFavs);
+    localStorage.setItem("favs", JSON.stringify(updatedFavs));
   };
 
   const swapCurrencies = () => {
@@ -47,7 +47,7 @@ function CurrencyConverter() {
 
   const convertCurrency = async () => {
     if (!amount) return;
-    setloading(true);
+    setLoading(true);
     try {
       const res = await fetch(
         `https://api.frankfurter.app/latest?amount=${amount}&from=${from}&to=${to}`
@@ -57,7 +57,7 @@ function CurrencyConverter() {
     } catch (error) {
       console.log(error);
     } finally {
-      setloading(false);
+      setLoading(false);
     }
   };
 
@@ -66,8 +66,8 @@ function CurrencyConverter() {
   }, []);
 
   return (
-    <div className="max-w-xl mx-auto my-10 p-5 bg-white rounded-lg shadow-md">
-      <h2 className="mb-5 text-2xl font-semibold text-gray-600">
+    <div className="max-w-xl mx-auto my-10 p-6 bg-gradient-to-b from-gray-800 to-gray-900 rounded-lg shadow-lg">
+      <h2 className="mb-5 text-3xl font-semibold text-purple-300">
         Currency Converter
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-end">
@@ -82,9 +82,9 @@ function CurrencyConverter() {
         <div className="flex justify-center -mb-5 sm:mb-0">
           <button
             onClick={swapCurrencies}
-            className="p-2 bg-gray-200 rounded-full cursor-pointer hover:bg-gray-300"
+            className="p-3 bg-purple-500 rounded-full shadow-md hover:bg-purple-600 transition-all"
           >
-            <HiArrowsRightLeft className="text-xl text-gray-600" />
+            <HiArrowsRightLeft className="text-2xl text-white" />
           </button>
         </div>
         <Dropdown
@@ -99,7 +99,7 @@ function CurrencyConverter() {
       <div>
         <label
           htmlFor="amount"
-          className="block mt-2 text-sm font0-medium text-gray-700"
+          className="block mt-4 text-sm font-medium text-gray-300"
         >
           Amount:
         </label>
@@ -107,13 +107,13 @@ function CurrencyConverter() {
           type="number"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 mt-4"
+          className="w-full p-3 border border-gray-600 bg-gray-800 text-white rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 mt-2"
         />
       </div>
       <div className="flex justify-end mt-6">
         <button
           onClick={convertCurrency}
-          className={`px-2 py-2 bg-purple-500 text-white rounded-md shadow-sm ${
+          className={`px-4 py-2 bg-purple-600 text-white rounded-lg shadow-md hover:bg-purple-700 transition-all ${
             loading && "animate-pulse"
           }`}
         >
@@ -121,8 +121,8 @@ function CurrencyConverter() {
         </button>
       </div>
       {convertedAmount && (
-        <div className="mt-4 text-lg font-medium text-right text-purple-900">
-          Converted amount:{convertedAmount}
+        <div className="mt-6 text-2xl font-semibold text-right text-purple-400">
+          Converted Amount: {convertedAmount}
         </div>
       )}
     </div>
